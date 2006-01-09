@@ -1,0 +1,13 @@
+= NEWS
+== 0.1.5 (2006-01-09)
+Status: experimental
+ * Implemented: reply to GET_BODY_CHUNK
+ * Not yet implemented: reply to PING
+ * Implemented: Server-side library.
+
+== 0.1 (2005-12-15)
+Status: very experimental
+ * Implemented functionalities to acts as a client.
+ * Not yet implemented: reply to GET_BODY_CHUNK response; cannot send large
+   request bodies which is larger than 0xFD bytes.
+ * Not yet implemented : functionalities to acts as a server.

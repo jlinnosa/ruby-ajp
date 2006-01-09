@@ -1,0 +1,56 @@
+Ruby/AJP README
+============
+
+  Ruby/AJP is a library to use Apache Jserv Protocol 1.3 in Ruby program.
+
+
+Requirements
+------------
+
+  * Ruby 1.8.3 or later
+
+
+Install
+-------
+
+  De-compress archive and enter its top directory.
+  Then type:
+
+   ($ su)
+    # ruby setup.rb
+
+  These simple step installs this program under the default
+  location of Ruby libraries.  You can also install files into
+  your favorite directory by supplying setup.rb some options.
+  Try "ruby setup.rb --help".
+
+License
+-------
+
+  Copyright (c) 2005-2006 Yugui <yugui@yugui.sakura.ne.jp>
+
+
+  Net::AJP13::Client was implemented by refering net/http, rev. 1.128.
+  Especially, its RDoc documentation is derived from Net::HTTP's one, which was
+  written by Minero Aoki and converted to RDoc by William Webber.
+  The original net/http is available from
+  http://www.ruby-lang.org/cgi-bin/cvsweb.cgi/ruby/lib/net/http.rb?rev=1.128
+ 
+  Copyright (c) 1999-2005 Yukihiro Matsumoto
+  Copyright (c) 1999-2005 Minero Aoki
+  Copyright (c) 2001 GOTOU Yuuzou
+
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; version 2.1
+  of the License
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
