@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'stringio'
-require File.dirname(__FILE__) + '/../../lib/net/ajp13server'
+require File.dirname(__FILE__) + '/../../lib/net/ajp13/server'
 
 class Net::AJP13::Server
   unless method_defined?(:fcall)
@@ -26,7 +26,7 @@ class Net::AJP13::Server::BodyInputTest < Test::Unit::TestCase
   class MockSocket
     def initialize(contents)
       @bodies = (
-        contents.map{|c| "\x12\x34#{[c.length].pack('n')}" + c } << 
+        contents.map{|c|"\x12\x34#{[c.length+2, c.length].pack('nn')}" + c } << 
 	"\x12\x34\x00\x00"
       ).map {|str| StringIO.new(str)}
       @write_buf = ''

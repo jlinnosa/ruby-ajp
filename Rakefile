@@ -4,7 +4,7 @@ require 'rake/rdoctask'
 require 'rake/gempackagetask'
 
 Rake::TestTask.new do |t|
-  t.libs << "test"
+  t.libs << "test" << "lib"
   t.pattern = [ 'test/**/test_ajp13*.rb', 'test/**/more_test_ajp13*.rb' ]
   t.verbose = true
 end

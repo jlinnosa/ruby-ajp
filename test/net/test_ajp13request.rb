@@ -159,8 +159,8 @@ class Net::AJP13::RequestTest < Test::Unit::TestCase
           assert_equal "deflate, gzip, x-gzip, identity, *;q=0", value
         when 'cookie'
           assert_block {
-            "JSESSIONID=54104A3A77560CEF8967D263F1A7193" == value or
-              "$Version=1" == value
+            "JSESSIONID=54104A3A775650CEF8967D263F1A7193, $Version=1" == value or
+            "$Version=1, JSESSIONID=54104A3A775650CEF8967D263F1A7193" == value
           }
         when 'cache-control'
           assert_equal "no-cache", value

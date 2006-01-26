@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "ruby-ajp"
-  spec.version = "0.1.5"
+  spec.version = "0.2.0"
   spec.required_ruby_version = ">= 1.8.3"
   spec.summary = "An implementation of Apache Jserv Protocol 1.3 in Ruby"
   spec.author = "Yugui"
@@ -20,8 +20,7 @@ Gem::Specification.new do |spec|
     "COPYING"
   spec.files.reject! {|fn| fn.include?('.svn') }
   spec.test_files = [
-    'packet', 'request',
-    'response', 'client'
+    'packet', 'request', 'response', 'client', 'server'
   ].map{|x| "test/net/test_ajp13#{x}.rb"}
   spec.has_rdoc = true
 end

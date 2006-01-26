@@ -83,7 +83,6 @@ class Net::AJP13::Server
   end
 
   def start(sock = nil)
-    logger.info("Starting #{self.class}")
     if sock
       @sock = sock
     else
@@ -96,13 +95,12 @@ class Net::AJP13::Server
         accepted = @sock.accept
 	Thread.new {
 	  begin
-	    until accepted.closed?
-              process(accepted)
-	    end
+	    accepted.sync = false
+            process(accepted)
 	  rescue StandardError => err
-	    logger.error("#{err.message} from #{err.backtrace("\n")}")
+	    logger.error("#{err.message} from #{err.backtrace.join("\n")}")
 	  rescue Object => err
-	    logger.fatal("#{err.message} from #{err.backtrace("\n")}")
+	    logger.fatal("#{err.message} from #{err.backtrace.join("\n")}")
 	  else
 	    logger.debug("closed")
 	  ensure
@@ -133,18 +131,23 @@ class Net::AJP13::Server
 
   # +conn+:: Accepted connection. +conn+ is an IO object or something like it.
   def process(conn)
-    packet = Net::AJP13::Packet.from_io(conn)
-    case packet.message_type
-    when FORWARD_REQUEST
-      process_forward_request(packet, conn)
-    when SHUTDOWN
-      process_shutdown(packet, conn)
-    when PING
-      process_ping(packet, conn)
-    when CPING
-      process_cping(packet, conn)
-    else
-      raise AJPPacketError, "Unrecognized packet type #{packet.message_type}"
+    loop do
+      break unless c = conn.getc
+      conn.ungetc c
+
+      packet = Net::AJP13::Packet.from_io(conn)
+      case packet.message_type
+      when FORWARD_REQUEST
+        process_forward_request(packet, conn)
+      when SHUTDOWN
+        process_shutdown(packet, conn)
+      when PING
+        process_ping(packet, conn)
+      when CPING
+        process_cping(packet, conn)
+      else
+        raise AJPPacketError, "Unrecognized packet type #{packet.message_type}"
+      end
     end
   end
 
@@ -178,6 +181,7 @@ class Net::AJP13::Server
       conn.write "\x41\x42#{[message.length + 4].pack('n')}\x03#{[message.length].pack('n')}#{message}\x00"
     else
       # SEND_HEADERS packet
+      res ||= Net::AJP13::Response.new(500)
       res['content-length'] ||= res.body.length.to_s if res.body 
       res.send_to conn
 
@@ -241,6 +245,7 @@ class Net::AJP13::Server
       @sock = sock
       @packet = Net::AJP13::Packet.from_io(sock)
       @length = length
+      packet_content_length = @packet.read_integer
       @read_length = 0
     end
 
@@ -346,7 +351,8 @@ class Net::AJP13::Server
 	  # this means eof
 	  break
 	else
-	  chunk = @packet.read_bytes(length - written_length)
+          packet_content_length = @packet.read_integer
+	  chunk = @packet.read_bytes([length - written_length, packet_content_length].min)
 	  buf[written_length, chunk.length] = chunk
 	  written_length += chunk.length
 	  @read_length += chunk.length

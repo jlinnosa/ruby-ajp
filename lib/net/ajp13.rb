@@ -1,9 +1,9 @@
 # = Ruby/AJP
-# An implementation of AJP(Apache Jserv Protocol) 1.3 in Ruby, 
+# Ruby/AJP is an implementation of AJP(Apache Jserv Protocol) 1.3 in Ruby, 
 # based on http://tomcat.apache.org/connectors-doc/common/ajpv13a.html.
 #
 # [Net::AJP13::Client] provides high-level API to implement AJP clients.
-#                      The interface of the client-side library is similar to
+#                      The interface of this client-side library is similar to
 #                      net/http.
 #                      see ajp13client.rb[link:files/lib/net/ajp13client_rb.html]
 #                      for more detail.
@@ -33,9 +33,8 @@
 
 require 'net/http'
 
-# :stopdoc:
-module Net; end
-# :startdoc:
+module Net #:nodoc:
+end
 
 module Net::AJP13
   module Constants 
@@ -93,7 +92,7 @@ class Net::AJP13::Request
   }.freeze
   SC_REQ_HEADER_NAMES.each_key {|k| k.freeze}
 
-  SC_A_REQ_ATTRIBUTE = 0xA0
+  SC_A_REQ_ATTRIBUTE = 0x0A
   # Maps request attribute names into their codes
   SC_A_NAMES = {
     :context => 0x01, 
@@ -194,7 +193,7 @@ class Net::AJP13::Request
       else
         header_name = packet.read_string
       end
-      req[header_name] = packet.read_string
+      req.add_field(header_name, packet.read_string)
     end
     loop do
       case attr_name = packet.read_byte
@@ -252,6 +251,7 @@ class Net::AJP13::Request
   # HTTP-side connection is over SSL or not.
   attr_accessor :is_ssl
   alias :is_ssl? :is_ssl
+  alias :ssl? :is_ssl
   def is_ssl=(value) #:nodoc:
     @is_ssl = !!value
   end 
@@ -562,7 +562,7 @@ end
 class Net::AJP13::AJPPacketError < IOError
 end
 
-# :stopdoc:
+# :enddoc:
 # Represents AJP1.3 Packet
 class Net::AJP13::Packet
   include Net::AJP13::Constants

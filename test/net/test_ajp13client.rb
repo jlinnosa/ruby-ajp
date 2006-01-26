@@ -1,5 +1,5 @@
 require 'test/unit'
-require File.dirname(__FILE__) + '/../../lib/net/ajp13client'
+require File.dirname(__FILE__) + '/../../lib/net/ajp13/client'
 
 class Net::AJP13::ClientTest < Test::Unit::TestCase
   def setup

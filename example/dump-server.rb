@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-require 'net/ajp13server'
+require 'net/ajp13/server'
 require 'erb'
 
 class DumpServer < Net::AJP13::Server
@@ -58,7 +58,7 @@ __END__
   <% if req.body_stream %>
    <% body = req.body_stream.read %>
    <% if %r(\Atext/) =~ req['content-type'] or 
-     req['content-type'] == 'application/x-form-www-urlencoded' %>
+     req['content-type'] == 'application/x-www-form-urlencoded' %>
     <pre><%=h body %></pre>
    <% else %>
     <pre><%=[body].pack('m')%></pre>
