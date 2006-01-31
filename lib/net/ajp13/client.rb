@@ -5,13 +5,13 @@
 # ==Example
 #
 # === Simple GET
-#    require 'net/ajp13client'
+#    require 'net/ajp13/client'
 #    Net::AJP13::Client.start('localhost') do |client|
 #      puts client.get('/index.jsp').body
 #    end
 #
 # === More about GET
-#    require 'net/ajp13client'
+#    require 'net/ajp13/client'
 #    req = Net::AJP13::GetRequest.new('/index.jsp')
 #    req.server_port = 80
 #    req['Host'] = 'www.example.com'
@@ -355,6 +355,15 @@ class Net::AJP13::Client
   # Equals #request(GetRequest.new(+path+, +header+)) in this version.
   def get(path, header = nil, &block)
     request(Net::AJP13::GetRequest.new(path, header), &block)
+  end
+
+  def post(path, body, header = nil, &block)
+    post = Net::AJP13::PostRequest.new(path, header)
+    if body.respond_to?(:read)
+      post.body_stream = body
+    else
+      post.body = body
+    end
   end
 end
 

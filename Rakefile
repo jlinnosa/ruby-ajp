@@ -10,7 +10,7 @@ Rake::TestTask.new do |t|
 end
 
 Rake::RDocTask.new do |rd|
-  rd.rdoc_files.include *['', 'client', 'server'].map{ |n|
+  rd.rdoc_files.include *['', '/client', '/server'].map{ |n|
     "lib/net/ajp13#{n}.rb"
   }
   rd.title = "Ruby/AJP - An implementation of Apache JServ Protocol 1.3"

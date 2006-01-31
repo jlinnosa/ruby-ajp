@@ -74,7 +74,7 @@ class Net::AJP13::Server
 
   # logger
   attr_accessor :logger
-  def logger
+  def logger #:nodoc:
     unless @logger
       require 'logger'
       @logger = Logger.new(STDOUT)
@@ -82,6 +82,10 @@ class Net::AJP13::Server
     @logger
   end
 
+
+  #
+  # Starts the server; opens the socket, begins accepting requests, ....
+  # +sock+:: If not nil, the server uses +sock+ instead of opening a new socket.
   def start(sock = nil)
     if sock
       @sock = sock
@@ -151,6 +155,11 @@ class Net::AJP13::Server
     end
   end
 
+
+  # Handler for FORWARD_REQUEST message.
+  #
+  # Normally, you should override #process_request instead of overriding this
+  # method directly.
   def process_forward_request(packet, conn)
     req = Net::AJP13::Request.from_packet(packet)
     if req['content-length'] and req.content_length > 0
@@ -212,6 +221,7 @@ class Net::AJP13::Server
     conn.close if user_code_error
   end
 
+  # Handler for CPING message
   def process_cping(packet, conn)
     packet = Net::AJP13::Packet.new
     packet.direction = :from_app
@@ -219,12 +229,14 @@ class Net::AJP13::Server
     packet.send_to conn
   end
 
+  # Handler for SHUTDOWN message.
   def process_shutdown(packet, conn)
     if IPAddr.new(conn.addr[3]) == IPAddr.new(conn.peeraddr[3])
       shutdown
     end
   end
 
+  # Shuts the server down.
   def shutdown(force = false)
     @shutdown = true
     @sock.close if force
@@ -235,7 +247,7 @@ class Net::AJP13::Server
 
   # Input stream that corresponds the request body from the web server.
   # BodyInput object acts as an IO except writing methods.
-  class BodyInput
+  class BodyInput #:nodoc: all
     include Net::AJP13::Constants
     include Enumerable
 
