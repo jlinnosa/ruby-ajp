@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = "ruby-ajp"
-  spec.version = "0.2.0"
+  spec.version = "0.2.1"
   spec.required_ruby_version = ">= 1.8.3"
   spec.summary = "An implementation of Apache Jserv Protocol 1.3 in Ruby"
   spec.author = "Yugui"

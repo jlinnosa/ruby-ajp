@@ -1,4 +1,8 @@
 = NEWS
+== 0.2.1 (2006-01-31)
+Status: alpha
+ * more RDocs
+
 == 0.1.5 (2006-01-09)
 Status: experimental
  * Implemented: reply to GET_BODY_CHUNK
