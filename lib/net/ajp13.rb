@@ -576,14 +576,6 @@ class Net::AJP13::Packet
   # corresponds to 'AB' in ASCII.
   AJP13_SW_HEADER = "\x41\x42"
 
-  # :stopdoc:
-  # suiting Ruby 1.9 feature
-  if RUBY_VERSION < '1.9'
-    # calls private methods
-    alias_method :fcall, :__send__
-  end
-  # :startdoc:
-  
   # Creates a new packet object.
   def initialize
     @direction = nil
@@ -602,7 +594,7 @@ class Net::AJP13::Packet
   # [IOError] when +io+ raises it.
   def self.from_io(io)
     p = self.new
-    p.fcall(:initialize_by_io, io)
+    p.__send__(:initialize_by_io, io)
     p
   end
 
