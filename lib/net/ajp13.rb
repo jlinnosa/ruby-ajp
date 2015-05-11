@@ -755,7 +755,7 @@ class Net::AJP13::Packet
   def read_string
     len = read_integer
     return nil unless len and len != 0xFFFF
-    raise Net::AJP13::AJPPacketError, "str length too large: #{len}" if
+    raise Net::AJP13::AJPPacketError, "str length too large: #{len} (0x#{sprintf('%X',len)})" if
       len > @packet_length - @pos
 
     str = @byte_stream.read(len)
