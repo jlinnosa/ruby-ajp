@@ -735,9 +735,9 @@ class Net::AJP13::Packet
     byte = read_byte
 
     case byte
-    when nil:  nil
-    when 0x00: false
-    when 0x01: true
+    when nil;  nil
+    when 0x00; false
+    when 0x01; true
     else 
       raise Net::AJP13::AJPPacketError,
         "Can't recognize #{byte} as an boolean value"
