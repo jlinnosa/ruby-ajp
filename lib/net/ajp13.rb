@@ -701,7 +701,7 @@ class Net::AJP13::Packet
   # returns +nil+ if the read position is over the packet length.
   def read_byte
     return nil unless @pos < @packet_length
-    byte = @byte_stream.getc
+    byte = @byte_stream.getbyte
     @pos += 1 if byte
     byte
   end
@@ -716,7 +716,7 @@ class Net::AJP13::Packet
   # returns +nil+ if the read position is over the packet length.
   def peek_byte
     return nil unless @pos < @packet_length
-    byte = @byte_stream.getc
+    byte = @byte_stream.getbyte
     @byte_stream.ungetc(byte) if byte
     byte
   end
@@ -764,7 +764,7 @@ class Net::AJP13::Packet
       raise Net::AJP13::AJPPacketError, "Invalid string format"
     end
 
-    trailer = @byte_stream.getc
+    trailer = @byte_stream.getbyte
     @pos += 1 if trailer
     raise Net::AJP13::AJPPacketError, "Missing trailing NUL" unless trailer == 0x00
 
