@@ -150,7 +150,7 @@ class Net::AJP13::Server
       when CPING
         process_cping(packet, conn)
       else
-        raise AJPPacketError, "Unrecognized packet type #{packet.message_type}"
+        raise Net::AJP13::AJPPacketError, "Unrecognized packet type #{packet.message_type}"
       end
     end
   end
