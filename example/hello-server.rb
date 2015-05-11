@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-require 'net/ajp13server'
+require 'net/ajp13/server'
 
 # This server always returns "Hello, World!"
 class HelloServer < Net::AJP13::Server
