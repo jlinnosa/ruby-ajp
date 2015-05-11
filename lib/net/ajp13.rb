@@ -166,7 +166,7 @@ class Net::AJP13::Request
 
     method = packet.read_byte
     method = 
-      REQUEST_METHOD_CODES.index(method) ||
+      REQUEST_METHOD_CODES.key(method) ||
       raise("Unrecognized HTTP method code #{method}")
 
     protocol = packet.read_string
@@ -187,7 +187,7 @@ class Net::AJP13::Request
       if packet.peek_byte == 0xA0
         header_name = packet.read_integer
         header_name = 
-          SC_REQ_HEADER_NAMES.index(header_name) ||
+          SC_REQ_HEADER_NAMES.key(header_name) ||
           raise("Unrecognized HTTP header code #{header_name}")
         header_name = header_name.tr('_', '-')
       else
@@ -204,7 +204,7 @@ class Net::AJP13::Request
       when SC_A_REQ_ATTRIBUTE
         attr_name = packet.read_string
       else
-        attr_name = SC_A_NAMES.index(attr_name) ||
+        attr_name = SC_A_NAMES.key(attr_name) ||
           raise("Unrecognized AJP request attribute #{attr_name}")
         attr_name = attr_name.to_s
       end
