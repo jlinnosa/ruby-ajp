@@ -707,7 +707,7 @@ class Net::AJP13::Packet
   end
 
   def unread_byte(byte)
-    @byte_stream.ungetc(byte)
+    @byte_stream.ungetbyte(byte)
     @pos -= 1
     nil
   end
@@ -717,7 +717,7 @@ class Net::AJP13::Packet
   def peek_byte
     return nil unless @pos < @packet_length
     byte = @byte_stream.getbyte
-    @byte_stream.ungetc(byte) if byte
+    @byte_stream.ungetbyte(byte) if byte
     byte
   end
 
