@@ -647,7 +647,7 @@ class Net::AJP13::Packet
   end
 
   def append_bytes(bytes)
-    @buf << bytes
+    @buf << bytes.b
   end
 
   def append_byte(val)
@@ -657,20 +657,22 @@ class Net::AJP13::Packet
 
   def append_boolean(val)
     @buf <<
-      if val then "\x01" else "\x00" end
+      if val then "\x01".b else "\x00".b end
   end
+
   def append_integer(val)
     val = val.to_int
     raise ArgumentError, "#{val} is too large to store into an AJP packet" if
       val > 0xFFFF
     @buf << [val].pack('n')
   end
+
   def append_string(str)
     if str.nil?
-      @buf << "\xFF\xFF"
+      @buf << "\xFF\xFF".b
     else
-      str = str.to_str
-      @buf << [str.length].pack('n') << str << "\0"
+      str = str.to_str.b
+      @buf << [str.length].pack('n') << str << "\0".b
     end
   end
 
