@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-require 'net/ajp13server'
+require 'net/ajp13/server'
 
 # This server always raises error
 class ErrorServer < Net::AJP13::Server
