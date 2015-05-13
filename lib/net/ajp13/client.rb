@@ -178,7 +178,7 @@ class Net::AJP13::Client
   # Raises AJPStateError if not started.
   def finish
     raise Net::AJP13::AJPStateError, 'AJP session not yet started' unless @state
-    @socket.close unless @socket.closed?
+    @socket.close unless @socket.nil? || @socket.closed?
     @state = @socket = nil
   end
 
